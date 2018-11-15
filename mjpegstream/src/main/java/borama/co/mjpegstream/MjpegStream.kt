@@ -14,8 +14,12 @@ class MjpegStream {
             override fun onStream(stream: MjpegInputStream) {
                 val mjpegTread = Thread(Runnable {
                     while (running) {
-                        val data = stream.readMjpegFrame()
-                        handler(data, null)
+                        try {
+                            val data = stream.readMjpegFrame()
+                            handler(data, null)
+                        } catch (exception: Exception) {
+                            handler(null, exception)
+                        }
                     }
                 })
                 mjpegTread.start()

@@ -107,6 +107,7 @@ class MjpegInputStream(val input: InputStream) : DataInputStream(BufferedInputSt
                     handler.post(StreamRunnable(inputStream, listener))
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    listener.onError(e)
                 }
             }).start()
 
